@@ -1,69 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>AI Waste Sorter</title>
+    <meta charset="UTF-8">
+    <title>Smart Waste Classifier</title>
+
     <style>
-        body { 
-            font-family: 'Segoe UI', sans-serif; 
-            text-align: center; 
-            background: #f4f9f4; 
-            /* This makes the color change look smooth */
-            transition: background-color 0.5s ease; 
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            background-color: #f4f9f4;
+            transition: background-color 0.5s ease;
             margin: 0;
             padding: 20px;
         }
-        #webcam-container { 
-            margin: 20px auto; 
-            border: 5px solid #2e7d32; 
-            border-radius: 15px; 
-            width: 400px; 
-            height: 400px;
-            overflow: hidden; 
-            background-color: #000;
+
+        h1 {
+            color: #2e7d32;
         }
+
+        #webcam-container {
+            margin: 20px auto;
+            border: 5px solid #2e7d32;
+            border-radius: 15px;
+            width: 400px;
+            height: 400px;
+            overflow: hidden;
+            background-color: black;
+        }
+
         #label-container {
             margin-top: 20px;
         }
-        #label-container div { 
-            font-size: 1.5rem; 
-            font-weight: bold; 
-            padding: 10px; 
-            color: #2e7d32; 
+
+        #label-container div {
+            font-size: 1.4rem;
+            font-weight: bold;
+            padding: 8px;
+            color: #2e7d32;
         }
-        button { 
-            background: #2e7d32; 
-            color: white; 
-            padding: 15px 30px; 
-            border: none; 
-            border-radius: 5px; 
-            cursor: pointer; 
-            font-size: 1.2rem;
+
+        button {
+            background: #2e7d32;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1rem;
             font-weight: bold;
         }
+
         button:hover {
             background: #1b5e20;
         }
     </style>
 </head>
+
 <body>
+
     <h1>Smart Waste Classifier</h1>
     <p>Point your trash at the camera to identify it.</p>
-    
-    <button type="button" onclick="init()">Start Camera</button>
-    
+
+    <button onclick="init()">Start Camera</button>
+
     <div id="webcam-container"></div>
     <div id="label-container"></div>
 
+    <!-- TensorFlow -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+
+    <!-- Teachable Machine -->
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
-    
-    <script type="text/javascript">
-        [span_0](start_span)// Your Teachable Machine model link[span_0](end_span)
+
+    <script>
+        // 🔗 Your Teachable Machine model
         const URL = "https://teachablemachine.withgoogle.com/models/qzbWj1b7y/";
-        
+
         let model, webcam, labelContainer, maxPredictions;
 
-        [span_1](start_span)// Initialize the AI model and webcam[span_1](end_span)
+        // Start camera and load model
         async function init() {
             const modelURL = URL + "model.json";
             const metadataURL = URL + "metadata.json";
@@ -71,57 +86,51 @@
             model = await tmImage.load(modelURL, metadataURL);
             maxPredictions = model.getTotalClasses();
 
-            const flip = true; 
-            webcam = new tmImage.Webcam(400, 400, flip); 
-            await webcam.setup(); 
+            const flip = true;
+            webcam = new tmImage.Webcam(400, 400, flip);
+            await webcam.setup();
             await webcam.play();
-            window.requestAnimationFrame(loop);
 
             document.getElementById("webcam-container").appendChild(webcam.canvas);
+
             labelContainer = document.getElementById("label-container");
+            labelContainer.innerHTML = "";
             for (let i = 0; i < maxPredictions; i++) {
                 labelContainer.appendChild(document.createElement("div"));
             }
+
+            window.requestAnimationFrame(loop);
         }
 
         async function loop() {
-            webcam.update(); 
+            webcam.update();
             await predict();
             window.requestAnimationFrame(loop);
         }
 
-        [span_2](start_span)// Logic to analyze image and change background color[span_2](end_span)
+        // Predict and change background color
         async function predict() {
-            const prediction = await model.predict(webcam.canvas);
-            
-            // Default background color (Neutral)
-            let detectedColor = "#f4f9f4"; 
+            const predictions = await model.predict(webcam.canvas);
+            let bgColor = "#f4f9f4"; // default
 
-            for (let i = 0; i < maxPredictions; i++) {
-                const className = prediction[i].className.toLowerCase();
-                const probability = prediction[i].probability;
+            for (let i = 0; i < predictions.length; i++) {
+                const className = predictions[i].className.toLowerCase();
+                const prob = predictions[i].probability;
 
-                // Update text display
-                const classPrediction = className + ": " + (probability * 100).toFixed(0) + "%";
-                labelContainer.childNodes[i].innerHTML = classPrediction;
+                labelContainer.childNodes[i].innerHTML =
+                    className + ": " + (prob * 100).toFixed(0) + "%";
 
-                // Change color if AI is more than 80% confident
-                if (probability > 0.80) {
-                    if (className === "paper") {
-                        detectedColor = "#fff3cd"; // Soft Yellow
-                    } else if (className === "metal") {
-                        detectedColor = "#e2e3e5"; // Light Grey
-                    } else if (className === "organic") {
-                        detectedColor = "#d4edda"; // Soft Green
-                    } else if (className === "plastic") {
-                        detectedColor = "#d1ecf1"; // Soft Blue
-                    }
+                if (prob > 0.80) {
+                    if (className === "paper") bgColor = "#fff3cd";      // yellow
+                    else if (className === "metal") bgColor = "#e2e3e5"; // grey
+                    else if (className === "organic") bgColor = "#d4edda"; // green
+                    else if (className === "plastic") bgColor = "#d1ecf1"; // blue
                 }
             }
-            
-            [span_3](start_span)// Apply the color change to the page[span_3](end_span)
-            document.body.style.backgroundColor = detectedColor;
+
+            document.body.style.backgroundColor = bgColor;
         }
     </script>
+
 </body>
 </html>
