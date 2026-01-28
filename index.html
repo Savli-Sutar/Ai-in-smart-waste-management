@@ -196,10 +196,10 @@ function loadQuestion(){
 function checkAnswer(choice){
  const fb=document.getElementById("quiz-feedback");
  if(choice===questions[currentQ].a){
-   fb.innerHTML=`<span style="color:var(--organic)">Correct! ${questions[currentQ].note}</span>`;
+   fb.innerHTML=<span style="color:var(--organic)">Correct! ${questions[currentQ].note}</span>;
    setTimeout(loadQuestion,2000);
  }else{
-   fb.innerHTML=`<span style="color:var(--wrong)">Not quite. Try again!</span>`;
+   fb.innerHTML=<span style="color:var(--wrong)">Not quite. Try again!</span>;
  }
 }
 loadQuestion();
@@ -246,7 +246,7 @@ async function predict(){
  preds.forEach((p,i)=>{
    const name=p.className.toLowerCase();
    const prob=p.probability;
-   labelContainer.childNodes[i].innerHTML=`${name}: ${(prob*100).toFixed(0)}%`;
+   labelContainer.childNodes[i].innerHTML=${name}: ${(prob*100).toFixed(0)}%;
 
    if(prob>0.85){
      ["plastic","paper","metal","organic"].forEach(type=>{
@@ -257,7 +257,7 @@ async function predict(){
 
          if(type!==lastLogged || Date.now()-lastTime>4000){
            const li=document.createElement("li");
-           li.innerHTML=`<b>${type.toUpperCase()}</b> - ${new Date().toLocaleTimeString()}`;
+           li.innerHTML=<b>${type.toUpperCase()}</b> - ${new Date().toLocaleTimeString()};
            document.getElementById("history-log").prepend(li);
            lastLogged=type;
            lastTime=Date.now();
