@@ -16,7 +16,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             text-align: center;
             background-color: #f4f9f4;
             transition: background-color 0.5s ease;
@@ -25,37 +25,8 @@
             color: #333;
         }
 
-        h1 { color: var(--primary); margin-bottom: 30px; }
-
-        /* --- Quiz Section --- */
-        #quiz-container {
-            max-width: 600px;
-            margin: 0 auto 40px;
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        }
-
-        .quiz-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .quiz-btn {
-            padding: 12px;
-            border: 2px solid #f0f0f0;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-
-        .quiz-btn:hover { background: #f9f9f9; border-color: var(--primary); }
-
-        /* --- Camera Section --- */
+        h1 { color: var(--primary); }
+        
         #webcam-container {
             margin: 20px auto;
             border: 8px solid var(--primary);
@@ -63,8 +34,8 @@
             width: 400px;
             height: 400px;
             overflow: hidden;
-            background-color: #000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background-color: black;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
         #label-container {
@@ -76,31 +47,61 @@
         }
 
         #label-container div {
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: bold;
             padding: 8px 15px;
             background: white;
             border-radius: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            color: var(--primary);
         }
 
-        .btn-start {
+        .btn-main {
             background: var(--primary);
             color: white;
-            padding: 16px 45px;
+            padding: 15px 40px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+            transition: 0.3s;
+            margin: 10px;
         }
 
-        /* --- Waste Grid --- */
+        /* --- Quiz Styling --- */
+        #quiz-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .quiz-btn {
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .quiz-btn:hover { background: #f9f9f9; border-color: #ccc; }
+        #quiz-feedback { margin-top: 15px; font-weight: bold; min-height: 24px; }
+
+        /* --- Waste Cards --- */
         .waste-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
+            gap: 15px;
             max-width: 1000px;
             margin: 40px auto;
         }
@@ -108,73 +109,48 @@
         .waste-card {
             background: white;
             border-radius: 15px;
-            padding: 20px;
+            padding: 15px;
             border-bottom: 6px solid #ccc;
-            opacity: 0.4;
-            transition: all 0.4s ease;
+            transition: 0.4s;
+            opacity: 0.5;
         }
 
-        .active-card {
-            opacity: 1 !important;
-            transform: scale(1.08);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
+        .active-card { opacity: 1 !important; transform: scale(1.1); z-index: 5; }
         .card-plastic { border-color: var(--plastic); }
         .card-paper { border-color: var(--paper); }
         .card-metal { border-color: var(--metal); }
         .card-organic { border-color: var(--organic); }
 
-        /* --- Detailed Instructions --- */
-        .details-section {
-            max-width: 800px;
-            margin: 50px auto;
-            text-align: left;
-        }
-
-        details {
-            background: white;
-            margin-bottom: 12px;
-            padding: 15px;
-            border-radius: 12px;
-            cursor: pointer;
-        }
-
-        summary { font-weight: bold; font-size: 1.1rem; }
-        details ul { padding-left: 20px; margin-top: 10px; }
-        details li { margin-bottom: 8px; color: #555; }
-
-        #history-section {
-            max-width: 500px;
-            margin: 30px auto;
-            background: #fff;
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px dashed #ccc;
-        }
+        /* --- Accordion --- */
+        .details-container { max-width: 800px; margin: 50px auto; text-align: left; }
+        details { background: white; margin-bottom: 8px; padding: 15px; border-radius: 10px; cursor: pointer; }
+        summary { font-weight: bold; list-style: none; }
+        
+        #history-section { max-width: 600px; margin: 20px auto; background: #fff; padding: 15px; border-radius: 15px; border: 1px dashed #ccc; }
+        #history-log { list-style: none; padding: 0; max-height: 100px; overflow-y: auto; }
     </style>
 </head>
 
 <body>
 
     <h1>Waste Management Smart Hub</h1>
-
+    
     <div id="quiz-container">
-        <h3>🧠 Recycling Quiz</h3>
-        <p id="quiz-question">Loading...</p>
+        <h2 style="margin-top:0">🧠 Recycling Quiz</h2>
+        <p id="quiz-question">Loading question...</p>
         <div class="quiz-options">
             <div class="quiz-btn" onclick="checkAnswer('plastic')">Plastic</div>
             <div class="quiz-btn" onclick="checkAnswer('paper')">Paper</div>
             <div class="quiz-btn" onclick="checkAnswer('metal')">Metal</div>
             <div class="quiz-btn" onclick="checkAnswer('organic')">Organic</div>
         </div>
-        <div id="quiz-feedback" style="margin-top:15px; font-weight:bold;"></div>
+        <div id="quiz-feedback"></div>
     </div>
 
-    <hr style="width:50%; border:1px solid #eee; margin:50px auto;">
+    <hr style="width:50%; border: 1px solid #ddd; margin: 40px auto;">
 
     <h2>📷 AI Live Classifier</h2>
-    <button class="btn-start" onclick="init()">Start Camera</button>
+    <button class="btn-main" onclick="init()">Start Camera</button>
 
     <div id="webcam-container"></div>
     <div id="label-container"></div>
@@ -187,39 +163,23 @@
     </div>
 
     <div id="history-section">
-        <strong>Recent Scans</strong>
-        <ul id="history-log" style="list-style:none; padding:0; font-size:0.9rem;"></ul>
+        <strong>Session Scans</strong>
+        <ul id="history-log"></ul>
     </div>
 
-    <div class="details-section">
-        <h2>Disposal Guide</h2>
-        <details id="details-plastic"><summary style="color:var(--plastic)">Plastic Instructions</summary>
-            <ul>
-                <li>Rinse all food containers thoroughly.</li>
-                <li>Keep caps screwed on to avoid sorting issues.</li>
-                <li>Never recycle soft plastics (bags/wraps) curbside.</li>
-            </ul>
+    <div class="details-container">
+        <h2>Disposal Encyclopedia</h2>
+        <details id="details-plastic"><summary style="color:var(--plastic)">Plastic Bullets</summary>
+            <ul><li>Rinse all food residue.</li><li>Keep caps on.</li><li>No soft bags.</li></ul>
         </details>
-        <details id="details-paper"><summary style="color:var(--paper)">Paper Instructions</summary>
-            <ul>
-                <li>Flatten all cardboard boxes.</li>
-                <li>Remove plastic tape and bubble wrap.</li>
-                <li>No greasy pizza boxes (compost these instead).</li>
-            </ul>
+        <details id="details-paper"><summary style="color:var(--paper)">Paper Bullets</summary>
+            <ul><li>Flatten boxes.</li><li>No greasy pizza boxes.</li><li>Keep dry.</li></ul>
         </details>
-        <details id="details-metal"><summary style="color:var(--metal)">Metal Instructions</summary>
-            <ul>
-                <li>Empty and rinse all soda and soup cans.</li>
-                <li>Keep metal lids attached or folded inside.</li>
-                <li>Aerosol cans must be 100% empty.</li>
-            </ul>
+        <details id="details-metal"><summary style="color:var(--metal)">Metal Bullets</summary>
+            <ul><li>Empty cans fully.</li><li>Rinse soup tins.</li><li>Keep lids attached.</li></ul>
         </details>
-        <details id="details-organic"><summary style="color:var(--organic)">Organic Instructions</summary>
-            <ul>
-                <li>Remove plastic stickers from fruit peels.</li>
-                <li>Avoid putting meat or bones in home compost bins.</li>
-                <li>Chop large scraps to help them decompose faster.</li>
-            </ul>
+        <details id="details-organic"><summary style="color:var(--organic)">Organic Bullets</summary>
+            <ul><li>Remove produce stickers.</li><li>No meat or dairy in home compost.</li></ul>
         </details>
     </div>
 
@@ -227,101 +187,80 @@
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 
     <script>
-        // --- QUIZ DATA ---
+        // --- QUIZ LOGIC ---
         const questions = [
-            {q: "Where does a greasy pizza box go?", a: "organic"},
-            {q: "Where do aluminum soda cans go?", a: "metal"},
-            {q: "Where do banana peels go?", a: "organic"},
-            {q: "Where do clean water bottles go?", a: "plastic"},
-            {q: "Where do dry newspapers go?", a: "paper"}
+            { q: "Where does a greasy pizza box go?", a: "organic", note: "Grease ruins paper recycling!" },
+            { q: "Where do soda cans go?", a: "metal", note: "Aluminum is infinitely recyclable." },
+            { q: "Where do banana peels go?", a: "organic", note: "They make great compost." },
+            { q: "Where do clean water bottles go?", a: "plastic", note: "Rinse them first!" },
+            { q: "Where do old newspapers go?", a: "paper", note: "Keep them dry and flat." }
         ];
         let currentQ = 0;
+
         function loadQuestion() {
             currentQ = Math.floor(Math.random() * questions.length);
-            document.getElementById("quiz-question").innerText = questions[currentQ].q;
-            document.getElementById("quiz-feedback").innerText = "";
+            document.getElementById('quiz-question').innerText = questions[currentQ].q;
+            document.getElementById('quiz-feedback').innerText = "";
         }
+
         function checkAnswer(choice) {
-            const fb = document.getElementById("quiz-feedback");
+            const feedback = document.getElementById('quiz-feedback');
             if(choice === questions[currentQ].a) {
-                fb.innerHTML = "<span style='color:var(--organic)'>Correct!</span>";
-                setTimeout(loadQuestion, 2000);
+                feedback.innerHTML = <span style="color:var(--organic)">Correct! ${questions[currentQ].note}</span>;
+                setTimeout(loadQuestion, 2500);
             } else {
-                fb.innerHTML = "<span style='color:var(--wrong)'>Try again!</span>";
+                feedback.innerHTML = <span style="color:var(--wrong)">Not quite. Try again!</span>;
             }
         }
         loadQuestion();
 
-        // --- CAMERA LOGIC ---
+        // --- AI SCANNER LOGIC ---
         const URL = "https://teachablemachine.withgoogle.com/models/qzbWj1b7y/";
-        let model, webcam, labelContainer, maxPredictions;
+        let model, webcam, labelContainer;
         let lastLogged = ""; let lastTime = 0;
 
         async function init() {
-            try {
-                model = await tmImage.load(URL + "model.json", URL + "metadata.json");
-                maxPredictions = model.getTotalClasses();
-
-                // Standard setup
-                webcam = new tmImage.Webcam(400, 400, true); 
-                await webcam.setup(); // This triggers the permission popup
-                await webcam.play();
-                
-                document.getElementById("webcam-container").innerHTML = "";
-                document.getElementById("webcam-container").appendChild(webcam.canvas);
-                
-                labelContainer = document.getElementById("label-container");
-                labelContainer.innerHTML = "";
-                for (let i = 0; i < maxPredictions; i++) {
-                    labelContainer.appendChild(document.createElement("div"));
-                }
-                document.querySelector(".btn-start").style.display = "none";
-                window.requestAnimationFrame(loop);
-            } catch (e) {
-                alert("Please ensure camera permissions are allowed in your browser settings.");
-            }
-        }
-
-        async function loop() {
-            webcam.update();
-            await predict();
+            model = await tmImage.load(URL + "model.json", URL + "metadata.json");
+            webcam = new tmImage.Webcam(400, 400, true);
+            await webcam.setup(); await webcam.play();
+            document.getElementById("webcam-container").appendChild(webcam.canvas);
+            labelContainer = document.getElementById("label-container");
+            labelContainer.innerHTML = "";
+            for (let i = 0; i < model.getTotalClasses(); i++) { labelContainer.appendChild(document.createElement("div")); }
             window.requestAnimationFrame(loop);
         }
+
+        async function loop() { webcam.update(); await predict(); window.requestAnimationFrame(loop); }
 
         async function predict() {
             const predictions = await model.predict(webcam.canvas);
             let bgColor = "#f4f9f4";
-            
-            document.querySelectorAll(".waste-card").forEach(c => c.classList.remove("active-card"));
+            document.querySelectorAll('.waste-card').forEach(c => c.classList.remove('active-card'));
 
-            predictions.forEach((p, i) => {
-                const name = p.className.toLowerCase();
-                const prob = p.probability;
-                labelContainer.childNodes[i].innerHTML = ${name}: ${(prob * 100).toFixed(0)}%;
+            for (let i = 0; i < predictions.length; i++) {
+                const name = predictions[i].className.toLowerCase();
+                const prob = predictions[i].probability;
+                labelContainer.childNodes[i].innerHTML = name + ": " + (prob * 100).toFixed(0) + "%";
 
                 if (prob > 0.85) {
-                    const types = ["plastic", "paper", "metal", "organic"];
-                    types.forEach(type => {
-                        if (name.includes(type)) {
-                            document.getElementById("card-" + type).classList.add("active-card");
-                            const colors = {plastic:"#d1ecf1", paper:"#fff3cd", metal:"#e2e3e5", organic:"#d4edda"};
-                            bgColor = colors[type];
-                            
-                            // Auto-open info
-                            document.querySelectorAll('details').forEach(d => d.open = false);
-                            document.getElementById('details-' + type).open = true;
+                    let type = name.includes("plastic") ? "plastic" : name.includes("paper") ? "paper" : name.includes("metal") ? "metal" : name.includes("organic") ? "organic" : "";
+                    if (type) {
+                        document.getElementById('card-' + type).classList.add('active-card');
+                        const bgColors = { plastic: "#d1ecf1", paper: "#fff3cd", metal: "#e2e3e5", organic: "#d4edda" };
+                        bgColor = bgColors[type];
+                        document.querySelectorAll('details').forEach(d => d.open = false);
+                        document.getElementById('details-' + type).open = true;
 
-                            // History Log
-                            if (type !== lastLogged || Date.now() - lastTime > 5000) {
-                                const li = document.createElement("li");
-                                li.innerHTML = <b>${type.toUpperCase()}</b> - ${new Date().toLocaleTimeString()};
-                                document.getElementById("history-log").prepend(li);
-                                lastLogged = type; lastTime = Date.now();
-                            }
+                        if (type !== lastLogged || (Date.now() - lastTime > 4000)) {
+                            const log = document.getElementById("history-log");
+                            const li = document.createElement("li");
+                            li.innerHTML = <b>${type.toUpperCase()}</b> - ${new Date().toLocaleTimeString()};
+                            log.prepend(li);
+                            lastLogged = type; lastTime = Date.now();
                         }
-                    });
+                    }
                 }
-            });
+            }
             document.body.style.backgroundColor = bgColor;
         }
     </script>
