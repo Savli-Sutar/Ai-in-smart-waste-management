@@ -144,12 +144,13 @@ function showInstructions(type) {
     const title = document.getElementById("instruction-title");
     const list = document.getElementById("instruction-list");
 
-    title.innerText = type.charAt(0).toUpperCase() + type.slice(1) + " Waste Disposal Instructions";
-    list.innerHTML = "";
+    title.innerText = type.charAt(0).toUpperCase() + type.slice(1) +
+        " Waste Disposal Instructions";
 
-    disposalRules[type].forEach(point => {
+    list.innerHTML = "";
+    disposalRules[type].forEach(text => {
         const li = document.createElement("li");
-        li.innerText = point;
+        li.innerText = text;
         list.appendChild(li);
     });
 
@@ -197,25 +198,32 @@ async function predict() {
             className + ": " + (prob * 100).toFixed(0) + "%";
 
         if (prob > 0.85) {
-            if (className === "plastic") {
+
+            /* ---- FIX: use includes() instead of === ---- */
+
+            if (className.includes("plastic")) {
                 bgColor = "#d1ecf1";
                 document.getElementById("card-plastic").classList.add("active-card");
                 showInstructions("plastic");
-            } else if (className === "paper") {
+            }
+            else if (className.includes("paper")) {
                 bgColor = "#fff3cd";
                 document.getElementById("card-paper").classList.add("active-card");
                 showInstructions("paper");
-            } else if (className === "metal") {
+            }
+            else if (className.includes("metal")) {
                 bgColor = "#e2e3e5";
                 document.getElementById("card-metal").classList.add("active-card");
                 showInstructions("metal");
-            } else if (className === "organic") {
+            }
+            else if (className.includes("organic")) {
                 bgColor = "#d4edda";
                 document.getElementById("card-organic").classList.add("active-card");
                 showInstructions("organic");
             }
         }
     }
+
     document.body.style.backgroundColor = bgColor;
 }
 </script>
